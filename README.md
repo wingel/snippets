@@ -1,2 +1,7 @@
-# snippets
-code snippets that don't belong anywhere else
+# Wingel's code snippets
+
+This repository contains small snippets of code that I can't justify
+creating a git repo for.
+
+
+
