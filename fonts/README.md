@@ -23,3 +23,20 @@ fc-cache -f
 
 It should now be possible to select the "Fixed" font in gnome-terminal
 or xfce4-terminal.
+
+A change was made to libvte a while go which makes the 6x13 font to be
+renderedas a 6x15 font with two empty pixels between each line.
+
+https://gitlab.gnome.org/GNOME/vte/-/issues/163
+
+Part of this is seems to be due to a bug in the font itself, the "Typo
+Line Gap" and "HHead Line Gap" fields are set to 90 which means that
+the font actually asks a bit of extra spacing between each line.  But
+even if these values are set to 0 the font will still be rendered as a
+6x14 font.  This seems to be beacuse the "EM Size" in this font is
+defined to be 1000 and since this isn't evenly divisible by 13,
+somewhere deep in FreeType / Pango / Cairo / libvte a bit of rounding
+is going on which causes the font height to become 14 instead of 13.
+
+By changing the "EM Size" to 1300 in FontForge this seems to work
+around this problem and the 6x13 font is again rendered as 6x13.
